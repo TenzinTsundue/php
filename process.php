@@ -2,6 +2,7 @@
 session_start();
 include 'connet.php';
 
+$id= 0;
 $name= '';
 $location='';
 $update=false;
@@ -46,4 +47,19 @@ if (isset($_GET['edit'])) {
         $name = $row['name'];
         $location=$row['location'];
     }
+}
+
+if (isset($_POST['update'])) {
+    $id =$_POST['id'];
+    $name = $_POST['name'];
+    $location = $_POST['location'];
+
+    $sql = "UPDATE data SET name='$name', location='$location' WHERE id=$id";
+    $conn->query($sql) or die($conn->error);
+
+    $_SESSION['message'] = "Record has been updated!";
+    $_SESSION['msg_type'] = "warning";
+
+    header('location: index.php');
+
 }
